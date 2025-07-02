@@ -1,0 +1,471 @@
+/* Animations - Vintage Cinema Theme */
+
+/* Film grain and scratch effects */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.04;
+    z-index: 1;
+    pointer-events: none;
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 2px,
+            rgba(255,255,255,.03) 2px,
+            rgba(255,255,255,.03) 4px
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 2px,
+            rgba(0,0,0,.05) 2px,
+            rgba(0,0,0,.05) 4px
+        );
+    animation: grain 8s steps(10) infinite;
+}
+
+/* Film scratch overlay */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.02;
+    z-index: 1;
+    pointer-events: none;
+    background: 
+        linear-gradient(90deg, transparent 99%, rgba(255,255,255,0.1) 99.5%, transparent 100%),
+        linear-gradient(0deg, transparent 99%, rgba(255,255,255,0.1) 99.5%, transparent 100%);
+    background-size: 100% 100%, 100% 100%;
+    animation: scratch 15s linear infinite;
+}
+
+/* Grain animation */
+@keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-1%, -1%); }
+    20% { transform: translate(1%, 1%); }
+    30% { transform: translate(-1%, 1%); }
+    40% { transform: translate(1%, -1%); }
+    50% { transform: translate(-1%, 0); }
+    60% { transform: translate(1%, 0); }
+    70% { transform: translate(0, 1%); }
+    80% { transform: translate(0, -1%); }
+    90% { transform: translate(1%, 1%); }
+}
+
+/* Scratch animation */
+@keyframes scratch {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Flicker effect */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 1; }
+    93% { opacity: 0.95; }
+    94% { opacity: 1; }
+    96% { opacity: 0.98; }
+    98% { opacity: 1; }
+}
+
+/* Page slide animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Curtain animations */
+@keyframes curtainLeft {
+    to { transform: translateX(-100%); }
+}
+
+@keyframes curtainRight {
+    to { transform: translateX(100%); }
+}
+
+@keyframes fadeOut {
+    to { 
+        opacity: 0; 
+        visibility: hidden; 
+    }
+}
+
+/* Spotlight effect */
+@keyframes spotlight {
+    from { left: -100%; }
+    to { left: 100%; }
+}
+
+/* Loading screen animations */
+@keyframes filmStripMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    transition: opacity 0.5s ease;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.loading-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.3);
+    animation: flicker 2s infinite;
+}
+
+.film-strip {
+    width: 300px;
+    height: 50px;
+    margin: 0 auto 2rem;
+    background-image: repeating-linear-gradient(
+        90deg,
+        var(--gray-dark) 0,
+        var(--gray-dark) 20px,
+        transparent 20px,
+        transparent 30px,
+        var(--gray-dark) 30px,
+        var(--gray-dark) 50px,
+        transparent 50px,
+        transparent 60px
+    );
+    position: relative;
+    overflow: hidden;
+}
+
+.film-strip::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background-image: repeating-linear-gradient(
+        90deg,
+        transparent 0,
+        transparent 10px,
+        var(--white) 10px,
+        var(--white) 20px,
+        transparent 20px,
+        transparent 30px
+    );
+    animation: filmStripMove 2s linear infinite;
+}
+
+.loading-text {
+    font-family: 'Special Elite', monospace;
+    color: var(--gray-light);
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Curtain Container */
+.curtain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    pointer-events: none;
+    animation: fadeOut 0.5s ease-out 2s forwards;
+}
+
+.curtain-left, .curtain-right {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+}
+
+.curtain-left {
+    left: 0;
+    animation: curtainLeft 2s ease-in-out forwards;
+    background-image: repeating-linear-gradient(
+        90deg,
+        #0a0a0a,
+        #0a0a0a 2px,
+        #1a1a1a 2px,
+        #1a1a1a 4px
+    );
+}
+
+.curtain-right {
+    right: 0;
+    animation: curtainRight 2s ease-in-out forwards;
+    background-image: repeating-linear-gradient(
+        90deg,
+        #0a0a0a,
+        #0a0a0a 2px,
+        #1a1a1a 2px,
+        #1a1a1a 4px
+    );
+}
+
+/* Button hover animations */
+@keyframes buttonGlow {
+    0% {
+        box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+    }
+    50% {
+        box-shadow: 0 5px 25px rgba(255,255,255,0.2);
+    }
+    100% {
+        box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+    }
+}
+
+/* Card hover animations */
+@keyframes cardFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-5px) rotate(1deg);
+    }
+}
+
+/* Projector light effect */
+@keyframes projectorLight {
+    from { transform: translateX(-50%) rotate(0deg); }
+    to { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* Typewriter effect */
+@keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blinkCursor {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+/* Film reel rotation */
+@keyframes reelRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Smooth appear animation */
+@keyframes smoothAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Shake animation for errors */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* Spin animation */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Fade in scale */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Slide up animation */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply animations to elements */
+.page {
+    display: none;
+    min-height: 100vh;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.page.active {
+    display: block;
+    animation: slideIn 0.6s ease-out forwards;
+}
+
+/* Board card animations */
+.reel-card,
+.typewriter-card,
+.poster-card,
+.canister-card,
+.folder-card {
+    animation: smoothAppear 0.6s ease-out backwards;
+}
+
+.reel-card:nth-child(1) { animation-delay: 0.1s; }
+.reel-card:nth-child(2) { animation-delay: 0.2s; }
+.reel-card:nth-child(3) { animation-delay: 0.3s; }
+.reel-card:nth-child(4) { animation-delay: 0.4s; }
+.reel-card:nth-child(5) { animation-delay: 0.5s; }
+.reel-card:nth-child(6) { animation-delay: 0.6s; }
+
+.typewriter-card:nth-child(1) { animation-delay: 0.1s; }
+.typewriter-card:nth-child(2) { animation-delay: 0.2s; }
+.typewriter-card:nth-child(3) { animation-delay: 0.3s; }
+
+.poster-card:nth-child(1) { animation-delay: 0.1s; }
+.poster-card:nth-child(2) { animation-delay: 0.15s; }
+.poster-card:nth-child(3) { animation-delay: 0.2s; }
+.poster-card:nth-child(4) { animation-delay: 0.25s; }
+
+/* Header animation */
+header {
+    animation: flicker 20s infinite;
+}
+
+/* Navigation button hover state */
+.nav-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.nav-btn:hover::after {
+    left: 100%;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    animation: spin 2s linear infinite;
+    z-index: 100;
+}
+
+/* Error message animation */
+.error-message {
+    animation: shake 0.5s ease, fadeInScale 0.3s ease;
+    background-color: #8b2020;
+    color: var(--white);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    margin: 1rem auto;
+    max-width: 600px;
+    text-align: center;
+    font-family: 'Special Elite', monospace;
+}
+
+/* Empty state animation */
+.empty-state {
+    animation: smoothAppear 0.6s ease-out;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--gray-light);
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+}
+
+.empty-state p:first-child {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+/* Action button pulse */
+.action-btn {
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.action-btn:hover {
+    animation: none;
+}
+
+/* Responsive animations */
+@media (max-width: 768px) {
+    .loading-title {
+        font-size: 2rem;
+    }
+    
+    .film-strip {
+        width: 200px;
+    }
+    
+    /* Reduce animation complexity on mobile */
+    body::before,
+    body::after {
+        animation-duration: 12s;
+    }
+    
+    .page.active {
+        animation: fadeInScale 0.4s ease-out forwards;
+    }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "yugyeong-cinema",
+  "version": "1.0.0",
+  "description": "Yugyeong's Cinema - A vintage cinema-themed TRPG board",
+  "main": "src/js/app.js",
+  "scripts": {
+    "dev": "live-server public --port=3000",
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "rollup -c",
+    "build:css": "postcss public/styles/main.css -o public/styles/bundle.css",
+    "compile:ts": "tsc"
+  },
+  "keywords": ["trpg", "cinema", "vintage", "supabase"],
+  "author": "Yugyeong",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "rollup": "^3.29.4",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "autoprefixer": "^10.4.16",
+    "live-server": "^1.2.2"
+  }
+}

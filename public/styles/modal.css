@@ -1,0 +1,1091 @@
+/* Modal Styles - Vintage Cinema Theme */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+}
+
+/* Film projector light effect */
+.modal-overlay::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 255, 255, 0.02) 0%,
+        transparent 40%
+    );
+    animation: projectorLight 20s linear infinite;
+}
+
+@keyframes projectorLight {
+    from { transform: translateX(-50%) rotate(0deg); }
+    to { transform: translateX(-50%) rotate(360deg); }
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border: 3px solid var(--gray-dark);
+    border-radius: 15px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow: auto;
+    position: relative;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s ease;
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Film perforations decoration */
+.modal-content::before,
+.modal-content::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 10px,
+        var(--gray-dark) 10px,
+        var(--gray-dark) 20px
+    );
+    pointer-events: none;
+}
+
+.modal-content::before {
+    left: -15px;
+}
+
+.modal-content::after {
+    right: -15px;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+/* Modal Close Button - Vintage Style */
+.modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: var(--primary-black);
+    border: 2px solid var(--gray-dark);
+    color: var(--gray-light);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: var(--transition);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-family: 'Special Elite', monospace;
+}
+
+.modal-close:hover {
+    color: var(--white);
+    background-color: var(--gray-dark);
+    transform: rotate(90deg);
+    border-color: var(--white);
+}
+
+.modal-body {
+    padding: 4rem 3rem 3rem;
+}
+
+.modal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    position: relative;
+}
+
+/* Title underline decoration */
+.modal-title::after {
+    content: '';
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--gray-medium) 20%, 
+        var(--white) 50%, 
+        var(--gray-medium) 80%, 
+        transparent 100%
+    );
+}
+
+/* Body no scroll when modal open */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* TRPG Detail Modal - Film Reel Theme */
+.modal-trpg-detail {
+    max-width: 800px;
+}
+
+.film-reel-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    position: relative;
+}
+
+.film-reel-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background-image: repeating-linear-gradient(
+        90deg,
+        var(--gray-dark) 0,
+        var(--gray-dark) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+}
+
+.session-info {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 1.5rem;
+    font-family: 'Special Elite', monospace;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+}
+
+.session-info span {
+    position: relative;
+    padding: 0.5rem 1rem;
+}
+
+.session-info span::before {
+    content: '•';
+    position: absolute;
+    left: -1.5rem;
+    color: var(--gray-medium);
+}
+
+.session-info span:first-child::before {
+    display: none;
+}
+
+.players-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+    border: 1px solid var(--gray-dark);
+}
+
+.players-section h3 {
+    font-family: 'Special Elite', monospace;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+}
+
+.players-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.player-tag {
+    background: linear-gradient(135deg, var(--gray-dark) 0%, rgba(51, 51, 51, 0.8) 100%);
+    padding: 0.4rem 1rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-family: 'Courier Prime', monospace;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.player-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(255, 255, 255, 0.1);
+}
+
+.content-section {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    border: 1px solid var(--gray-dark);
+}
+
+.typewriter-text {
+    font-family: 'Courier Prime', monospace;
+    line-height: 2;
+    color: var(--white);
+    font-size: 1.05rem;
+}
+
+.typewriter-text p {
+    margin-bottom: 1.5rem;
+    text-indent: 3rem;
+}
+
+/* Story Detail Modal - Typewriter Theme */
+.modal-story-detail {
+    max-width: 800px;
+}
+
+.typewriter-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    position: relative;
+}
+
+.story-meta {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 1.5rem;
+    font-family: 'Courier Prime', monospace;
+    color: var(--gray-light);
+}
+
+.story-meta .author {
+    font-style: italic;
+}
+
+.tags-section {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-bottom: 2rem;
+}
+
+.story-tag {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.4rem 1rem;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    font-family: 'Special Elite', monospace;
+    border: 1px solid var(--gray-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    transition: var(--transition);
+}
+
+.story-tag:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--gray-light);
+}
+
+.story-content {
+    font-family: 'Libre Baskerville', serif;
+    line-height: 2.2;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 2.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--gray-dark);
+}
+
+.story-content p {
+    margin-bottom: 1.8rem;
+    text-indent: 3rem;
+}
+
+/* Character Pair Detail Modal - Movie Poster Theme */
+.modal-pair-detail {
+    max-width: 700px;
+}
+
+.movie-poster-style {
+    text-align: center;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.poster-header {
+    margin-bottom: 3rem;
+}
+
+.poster-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 1rem;
+    letter-spacing: 0.4rem;
+    color: var(--gray-medium);
+    display: block;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.character-names-large h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    margin: 0.8rem 0;
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+}
+
+.and-symbol {
+    font-family: 'Special Elite', monospace;
+    font-size: 3rem;
+    color: var(--gray-light);
+    display: block;
+    margin: 1.5rem 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.relationship-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 1.1rem;
+    color: var(--gray-light);
+    margin-top: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+    padding: 0.5rem 2rem;
+    border: 1px solid var(--gray-dark);
+    display: inline-block;
+    border-radius: 20px;
+}
+
+.pair-image {
+    margin: 2.5rem auto;
+    border: 5px solid var(--gray-dark);
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.pair-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.pair-description,
+.story-context {
+    text-align: left;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 1px solid var(--gray-dark);
+    max-width: 600px;
+}
+
+.pair-description h3,
+.story-context h3 {
+    font-family: 'Special Elite', monospace;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+}
+
+/* Archive List Modal - Film Canister Theme */
+.modal-archive-list {
+    max-width: 900px;
+}
+
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.archive-item {
+    background: linear-gradient(135deg, var(--gray-dark) 0%, rgba(51, 51, 51, 0.5) 100%);
+    border-radius: 15px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: var(--transition);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.archive-item::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.archive-item:hover::before {
+    opacity: 1;
+}
+
+.archive-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
+    border-color: var(--gray-light);
+}
+
+.archive-item-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+    filter: grayscale(20%);
+}
+
+.archive-item h4 {
+    font-family: 'Special Elite', monospace;
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+.archive-item p {
+    font-size: 0.9rem;
+    color: var(--gray-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.archive-item-actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+}
+
+.archive-item-actions button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--gray-dark);
+    color: var(--white);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Special Elite', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+.archive-item-actions button:hover {
+    background: var(--gray-dark);
+    border-color: var(--gray-light);
+    transform: translateY(-2px);
+}
+
+/* Gallery Folder Modal - Photo Album Theme */
+.modal-gallery-folder {
+    max-width: 1000px;
+}
+
+.folder-description {
+    text-align: center;
+    color: var(--gray-light);
+    margin-bottom: 2.5rem;
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 3rem 0;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 1px solid var(--gray-dark);
+}
+
+.gallery-item {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 8px;
+    aspect-ratio: 1;
+    background-color: var(--gray-dark);
+    transition: var(--transition);
+    border: 3px solid transparent;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.gallery-item:hover {
+    transform: scale(1.05) rotate(-1deg);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+    border-color: var(--white);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.image-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+    color: var(--white);
+    padding: 1.5rem 0.8rem 0.8rem;
+    font-size: 0.9rem;
+    text-align: center;
+    font-family: 'Special Elite', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .image-title {
+    transform: translateY(0);
+}
+
+/* Form Modal - Vintage Cinema Ticket Theme */
+.modal-form {
+    max-width: 650px;
+}
+
+.cinema-form {
+    margin-top: 2.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 2.5rem;
+    border-radius: 10px;
+    border: 2px dashed var(--gray-dark);
+    position: relative;
+}
+
+/* Ticket perforation effect */
+.cinema-form::before,
+.cinema-form::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: var(--secondary-black);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.cinema-form::before {
+    left: -20px;
+}
+
+.cinema-form::after {
+    right: -20px;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-family: 'Special Elite', monospace;
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 2px solid var(--gray-dark);
+    color: var(--white);
+    padding: 1rem;
+    font-family: 'Courier Prime', monospace;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--white);
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.file-hint {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--gray-medium);
+    font-style: italic;
+}
+
+/* Image Preview Grid */
+.image-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.preview-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 2px solid var(--gray-dark);
+}
+
+.preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-item p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--white);
+    font-size: 0.7rem;
+    padding: 0.3rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Modal Actions - Cinema Button Style */
+.modal-actions,
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 2px dashed var(--gray-dark);
+    position: relative;
+}
+
+.modal-actions::before,
+.form-actions::before {
+    content: '★ ★ ★';
+    position: absolute;
+    top: -0.8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--secondary-black);
+    padding: 0 1rem;
+    color: var(--gray-medium);
+    letter-spacing: 0.5rem;
+}
+
+.modal-actions button,
+.form-actions button {
+    padding: 1rem 2.5rem;
+    font-family: 'Special Elite', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    border: 3px solid var(--gray-dark);
+    background-color: var(--primary-black);
+    color: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-actions button::before,
+.form-actions button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.modal-actions button:hover::before,
+.form-actions button:hover::before {
+    left: 100%;
+}
+
+.modal-actions button:hover,
+.form-actions button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--white) 0%, #e8e8e8 100%) !important;
+    color: var(--primary-black) !important;
+    border-color: var(--white) !important;
+    font-weight: 700;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #e8e8e8 0%, var(--gray-light) 100%) !important;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+}
+
+.btn-cancel {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-cancel:hover {
+    background: var(--gray-dark);
+    border-color: var(--gray-light);
+}
+
+.btn-edit {
+    border-color: var(--gray-medium) !important;
+}
+
+.btn-edit:hover {
+    background: var(--gray-dark) !important;
+    border-color: var(--white) !important;
+}
+
+.btn-delete {
+    border-color: #8b2020 !important;
+    color: #ff6666 !important;
+}
+
+.btn-delete:hover {
+    background: #8b2020 !important;
+    color: var(--white) !important;
+    border-color: #ff6666 !important;
+}
+
+/* Empty State */
+.empty-message {
+    text-align: center;
+    color: var(--gray-light);
+    font-style: italic;
+    padding: 3rem;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+}
+
+/* Lightbox Modal */
+.modal-lightbox .modal-content {
+    background: rgba(0, 0, 0, 0.95);
+    border: none;
+    max-width: 95%;
+    max-height: 95vh;
+}
+
+.lightbox-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+}
+
+.lightbox-image {
+    position: relative;
+    max-width: 100%;
+    max-height: 70vh;
+}
+
+.lightbox-image img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border: 5px solid var(--gray-dark);
+    border-radius: 10px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--gray-dark);
+    color: var(--white);
+    font-size: 3rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Special Elite', monospace;
+}
+
+.lightbox-prev {
+    left: 2rem;
+}
+
+.lightbox-next {
+    right: 2rem;
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    background: var(--gray-dark);
+    border-color: var(--white);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.lightbox-info {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: var(--white);
+    width: 100%;
+    padding: 0 2rem;
+}
+
+.lightbox-info h3 {
+    font-family: 'Special Elite', monospace;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+}
+
+.lightbox-info p {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1rem;
+    color: var(--gray-light);
+    margin-bottom: 0.5rem;
+}
+
+.image-counter {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.9rem;
+    color: var(--gray-medium);
+}
+
+/* Loading State for Modal */
+.modal-loading {
+    text-align: center;
+    padding: 4rem;
+}
+
+.modal-loading::after {
+    content: '🎬';
+    font-size: 3rem;
+    display: block;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Toast Notifications - Cinema Ticket Style */
+#toast-container {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 2000;
+}
+
+.toast-error,
+.toast-success {
+    background: linear-gradient(135deg, var(--secondary-black) 0%, var(--primary-black) 100%);
+    border: 3px solid;
+    padding: 1.2rem 2rem 1.2rem 3.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    font-family: 'Special Elite', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.toast-error::before,
+.toast-success::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+}
+
+.toast-error {
+    border-color: #8b2020;
+    color: #ff9999;
+}
+
+.toast-error::before {
+    background: #ff6666;
+}
+
+.toast-success {
+    border-color: #2a5a2a;
+    color: #99ff99;
+}
+
+.toast-success::before {
+    background: #66ff66;
+}
+
+.toast-error.show,
+.toast-success.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Responsive Modal Styles */
+@media (max-width: 768px) {
+    .modal-content {
+        max-width: 95%;
+        max-height: 95vh;
+        margin: 1rem;
+        border-width: 2px;
+    }
+    
+    .modal-content::before,
+    .modal-content::after {
+        display: none;
+    }
+    
+    .modal-body {
+        padding: 3rem 1.5rem 2rem;
+    }
+    
+    .modal-title {
+        font-size: 2rem;
+        letter-spacing: 0.1rem;
+    }
+    
+    .modal-close {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .archive-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .lightbox-prev,
+    .lightbox-next {
+        width: 50px;
+        height: 50px;
+        font-size: 2rem;
+    }
+    
+    .lightbox-prev {
+        left: 1rem;
+    }
+    
+    .lightbox-next {
+        right: 1rem;
+    }
+    
+    .modal-actions button,
+    .form-actions button {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.85rem;
+    }
+    
+    #toast-container {
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+    }
+    
+    .toast-error,
+    .toast-success {
+        margin: 0 0 1rem 0;
+    }
+}
