@@ -220,6 +220,14 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <!-- App Scripts with version -->
-    <script type="module" src="/src/js/app.js?v=1.0.1"></script>
+    <script type="module">
+        import('./src/js/app.js').catch(err => {
+            console.error('Module loading error:', err);
+            // 폴백: 경로 문제시 다른 경로 시도
+            import('../src/js/app.js').catch(err2 => {
+                console.error('Failed to load app.js:', err2);
+            });
+        });
+    </script>
 </body>
 </html>
