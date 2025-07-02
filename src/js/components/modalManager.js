@@ -3,6 +3,7 @@ import { StoryService } from '../services/storyService.js';
 import { PairService } from '../services/pairService.js';
 import { ArchiveService } from '../services/archiveService.js';
 import { GalleryService } from '../services/galleryService.js';
+import { authService } from '../services/netlifyAuthService.js'; // Netlify Auth 사용
 
 export class ModalManager {
     constructor() {
@@ -888,30 +889,40 @@ export class ModalManager {
         const confirmed = confirm('Are you sure you want to delete this item?');
         if (!confirmed) return;
 
-        let success = false;
-        
-        switch (type) {
-            case 'trpg':
-                success = await TRPGService.deleteLog(id);
-                break;
-            case 'story':
-                success = await StoryService.deleteStory(id);
-                break;
-            case 'pair':
-                success = await PairService.deletePair(id);
-                break;
-            case 'gallery':
-                success = await GalleryService.deleteFolder(id);
-                break;
-        }
+        try {
+            // 인증 필요
+            await authService.requireAuth(async () => {
+                let success = false;
+                
+                switch (type) {
+                    case 'trpg':
+                        success = await TRPGService.deleteLog(id);
+                        break;
+                    case 'story':
+                        success = await StoryService.deleteStory(id);
+                        break;
+                    case 'pair':
+                        success = await PairService.deletePair(id);
+                        break;
+                    case 'gallery':
+                        success = await GalleryService.deleteFolder(id);
+                        break;
+                }
 
-        if (success) {
-            this.showSuccess('Item deleted successfully');
-            this.closeModal();
-            // Refresh the current board
-            document.dispatchEvent(new CustomEvent('refresh-board'));
-        } else {
-            this.showError('Failed to delete item');
+                if (success) {
+                    this.showSuccess('Item deleted successfully');
+                    this.closeModal();
+                    // Refresh the current board
+                    document.dispatchEvent(new CustomEvent('refresh-board'));
+                } else {
+                    this.showError('Failed to delete item');
+                }
+            });
+        } catch (error) {
+            console.error('Error deleting item:', error);
+            if (error.message !== 'Authentication required') {
+                this.showError('An error occurred');
+            }
         }
     }
 
@@ -927,23 +938,28 @@ export class ModalManager {
         };
 
         try {
-            let result;
-            if (logId) {
-                result = await TRPGService.updateLog(logId, data);
-            } else {
-                result = await TRPGService.createLog(data);
-            }
+            // 인증 필요
+            await authService.requireAuth(async () => {
+                let result;
+                if (logId) {
+                    result = await TRPGService.updateLog(logId, data);
+                } else {
+                    result = await TRPGService.createLog(data);
+                }
 
-            if (result) {
-                this.showSuccess(logId ? 'Session updated!' : 'Session created!');
-                this.closeModal();
-                document.dispatchEvent(new CustomEvent('refresh-board'));
-            } else {
-                this.showError('Failed to save session');
-            }
+                if (result) {
+                    this.showSuccess(logId ? 'Session updated!' : 'Session created!');
+                    this.closeModal();
+                    document.dispatchEvent(new CustomEvent('refresh-board'));
+                } else {
+                    this.showError('Failed to save session');
+                }
+            });
         } catch (error) {
             console.error('Error saving TRPG log:', error);
-            this.showError('An error occurred');
+            if (error.message !== 'Authentication required') {
+                this.showError('An error occurred');
+            }
         }
     }
 

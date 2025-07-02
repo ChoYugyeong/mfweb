@@ -4,6 +4,7 @@ import { PairService } from '../services/pairService.js';
 import { ArchiveService } from '../services/archiveService.js';
 import { GalleryService } from '../services/galleryService.js';
 import { ModalManager } from './modalManager.js';
+import { authService } from '../services/netlifyAuthService.js'; // Netlify Auth 사용
 
 export class BoardManager {
     constructor() {
@@ -296,23 +297,29 @@ export class BoardManager {
 
         const pageId = activePage.id;
         
-        switch (pageId) {
-            case 'trpg':
-                this.modalManager.showTRPGForm();
-                break;
-            case 'stories':
-                this.modalManager.showStoryForm();
-                break;
-            case 'pairs':
-                this.modalManager.showPairForm();
-                break;
-            case 'archive':
-                this.modalManager.showArchiveUpload();
-                break;
-            case 'gallery':
-                this.modalManager.showGalleryForm();
-                break;
-        }
+        // 인증 필요한 액션들
+        authService.requireAuth(() => {
+            switch (pageId) {
+                case 'trpg':
+                    this.modalManager.showTRPGForm();
+                    break;
+                case 'stories':
+                    this.modalManager.showStoryForm();
+                    break;
+                case 'pairs':
+                    this.modalManager.showPairForm();
+                    break;
+                case 'archive':
+                    this.modalManager.showArchiveUpload();
+                    break;
+                case 'gallery':
+                    this.modalManager.showGalleryForm();
+                    break;
+            }
+        }).catch(error => {
+            // 인증 취소 시 아무것도 하지 않음
+            console.log('Authentication cancelled');
+        });
     }
 
     showLoading(pageId) {
