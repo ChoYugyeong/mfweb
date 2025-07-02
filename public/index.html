@@ -219,15 +219,64 @@
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
+    <!-- Fallback Navigation (앱 로드 실패시 작동) -->
+    <script>
+        (function() {
+            function initBasicNavigation() {
+                const navButtons = document.querySelectorAll('.nav-btn');
+                const pages = document.querySelectorAll('.page');
+                
+                navButtons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        
+                        const pageId = button.getAttribute('data-page');
+                        if (!pageId) return;
+                        
+                        pages.forEach(page => {
+                            page.classList.remove('active');
+                        });
+                        
+                        const targetPage = document.getElementById(pageId);
+                        if (targetPage) {
+                            targetPage.classList.add('active');
+                        }
+                        
+                        navButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        button.classList.add('active');
+                        
+                        window.scrollTo(0, 0);
+                    });
+                });
+                
+                console.log('✅ Basic navigation ready');
+            }
+            
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initBasicNavigation);
+            } else {
+                initBasicNavigation();
+            }
+            
+            // 로딩 화면 숨기기
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loading-screen');
+                if (loadingScreen) {
+                    loadingScreen.style.display = 'none';
+                }
+            }, 500);
+        })();
+    </script>
+    
     <!-- App Scripts -->
     <script type="module">
-        // Netlify 배포 환경에 맞게 경로 수정
+        // 앱 로드 시도 (실패해도 기본 기능은 작동)
         import('./js/app.js').then(() => {
-            console.log('✅ App loaded successfully');
+            console.log('✅ Full app loaded');
         }).catch(err => {
-            console.error('❌ Failed to load app:', err);
-            // 앱 로드 실패시 기본 기능만 제공
-            document.getElementById('loading-screen').style.display = 'none';
+            console.error('⚠️ App load failed, using basic mode:', err);
         });
     </script>
 </body>
