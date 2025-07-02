@@ -1,0 +1,797 @@
+/* Responsive Styles - Mobile First Approach */
+
+/* Large Screens (1200px and below) */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 100%;
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+    
+    .ticket {
+        max-width: 100%;
+    }
+    
+    .stories-board {
+        max-width: 100%;
+    }
+}
+
+/* Tablets Landscape (1024px and below) */
+@media (max-width: 1024px) {
+    /* Navigation adjustments */
+    .nav-container {
+        padding: 0 1.5rem;
+    }
+    
+    /* Grid adjustments */
+    .trpg-board {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+    
+    .pairs-board {
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    }
+    
+    .archive-board {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    
+    .gallery-folders {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+/* Tablets Portrait (968px and below) */
+@media (max-width: 968px) {
+    /* Header adjustments */
+    header {
+        padding: 2rem 0;
+    }
+    
+    .cinema-title {
+        font-size: 3rem;
+        letter-spacing: 0.3rem;
+    }
+    
+    .subtitle {
+        font-size: 0.85rem;
+        letter-spacing: 0.2rem;
+    }
+    
+    /* Navigation positioning */
+    nav {
+        top: 120px;
+        padding: 1.2rem 0;
+    }
+    
+    /* Container spacing */
+    .container {
+        padding-top: 220px;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    
+    /* Navigation buttons */
+    .nav-row {
+        gap: 0.8rem;
+    }
+    
+    .nav-btn {
+        min-width: 100px;
+        padding: 0.8rem 1rem;
+    }
+    
+    .nav-icon {
+        font-size: 1.3rem;
+    }
+    
+    .nav-text {
+        font-size: 0.8rem;
+    }
+    
+    /* Board titles */
+    .board-title {
+        font-size: 2.5rem;
+        letter-spacing: 0.2rem;
+    }
+    
+    .board-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    /* Grid adjustments */
+    .trpg-board {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 2rem;
+    }
+    
+    .pairs-board {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 2rem;
+    }
+    
+    /* Action button */
+    .action-btn {
+        bottom: 25px;
+        right: 25px;
+        padding: 1rem 2rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Modal adjustments */
+    .modal-content {
+        margin: 1.5rem;
+    }
+    
+    .modal-title {
+        font-size: 2.2rem;
+    }
+    
+    .modal-body {
+        padding: 3rem 2rem;
+    }
+}
+
+/* Mobile Landscape (768px and below) */
+@media (max-width: 768px) {
+    /* Header */
+    header {
+        padding: 1.8rem 0;
+    }
+    
+    .cinema-title {
+        font-size: 2.5rem;
+        letter-spacing: 0.2rem;
+    }
+    
+    .subtitle {
+        font-size: 0.8rem;
+    }
+    
+    /* Navigation */
+    nav {
+        top: 110px;
+        padding: 1rem 0;
+    }
+    
+    .container {
+        padding-top: 200px;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    
+    .nav-row {
+        gap: 0.5rem;
+    }
+    
+    .nav-btn {
+        min-width: 85px;
+        padding: 0.7rem 0.8rem;
+    }
+    
+    /* Ticket styling */
+    .ticket {
+        padding: 2.5rem 2rem;
+        transform: rotate(-0.5deg);
+    }
+    
+    .ticket-header h2 {
+        font-size: 2rem;
+    }
+    
+    .ticket-content {
+        font-size: 1.1rem;
+    }
+    
+    /* Typography scale */
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.5rem; }
+    h4 { font-size: 1.3rem; }
+    
+    /* Board headers */
+    .board-header {
+        margin-bottom: 3rem;
+    }
+    
+    .board-title {
+        font-size: 2rem;
+    }
+    
+    /* Grid layouts */
+    .trpg-board {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    
+    .pairs-board {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    
+    .archive-board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .gallery-folders {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    /* Card adjustments */
+    .reel-card {
+        padding: 1.5rem;
+    }
+    
+    .reel-title {
+        font-size: 1.1rem;
+    }
+    
+    .typewriter-card {
+        padding: 2.5rem 2rem;
+    }
+    
+    .story-title {
+        font-size: 1.2rem;
+    }
+    
+    .character-names h3 {
+        font-size: 1.1rem;
+    }
+    
+    .canister-card {
+        padding: 2rem 0.8rem;
+        min-height: 250px;
+    }
+    
+    /* Modal adjustments */
+    .modal-content {
+        max-width: 95%;
+        max-height: 90vh;
+    }
+    
+    .modal-body {
+        padding: 2.5rem 1.5rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    /* Footer */
+    footer {
+        padding: 2.5rem 0 1.5rem;
+        margin-top: 4rem;
+    }
+    
+    .footer-quote {
+        font-size: 1.3rem;
+    }
+}
+
+/* Mobile Portrait (480px and below) */
+@media (max-width: 480px) {
+    /* Header */
+    header {
+        padding: 1.5rem 0;
+    }
+    
+    .cinema-title {
+        font-size: 1.8rem;
+        letter-spacing: 0.1rem;
+        -webkit-text-stroke: 0.3px rgba(255,255,255,0.3);
+    }
+    
+    .subtitle {
+        font-size: 0.65rem;
+        letter-spacing: 0.1rem;
+    }
+    
+    /* Navigation */
+    nav {
+        top: 90px;
+        padding: 0.8rem 0;
+    }
+    
+    .container {
+        padding-top: 170px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .nav-container {
+        padding: 0 0.5rem;
+    }
+    
+    .nav-row {
+        gap: 0.3rem;
+        justify-content: space-between;
+    }
+    
+    .nav-btn {
+        min-width: auto;
+        flex: 1;
+        max-width: 65px;
+        padding: 0.5rem 0.3rem;
+    }
+    
+    .nav-icon {
+        font-size: 1rem;
+    }
+    
+    .nav-text {
+        font-size: 0.6rem;
+        letter-spacing: 0;
+    }
+    
+    /* Hero section */
+    .hero-section {
+        margin: 1rem auto 3rem;
+    }
+    
+    .ticket {
+        padding: 2rem 1.5rem;
+        transform: rotate(0deg);
+    }
+    
+    .ticket::before,
+    .ticket::after {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .ticket::before {
+        left: -15px;
+    }
+    
+    .ticket::after {
+        right: -15px;
+    }
+    
+    .ticket-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+    }
+    
+    .ticket-header h2 {
+        font-size: 1.6rem;
+        letter-spacing: 0;
+    }
+    
+    .ticket-number {
+        font-size: 0.75rem;
+    }
+    
+    .ticket-content {
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+    
+    .ticket-content p {
+        text-indent: 1.5rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .admit-one {
+        font-size: 0.9rem;
+        padding: 0.5rem 1.5rem;
+        letter-spacing: 0.2rem;
+    }
+    
+    /* Typography scale */
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+    h4 { font-size: 1.1rem; }
+    
+    /* Board styles */
+    .board-header {
+        margin-bottom: 2.5rem;
+    }
+    
+    .board-header::after {
+        width: 120px;
+        bottom: -1.5rem;
+    }
+    
+    .board-title {
+        font-size: 1.6rem;
+        letter-spacing: 0.1rem;
+    }
+    
+    .board-subtitle {
+        font-size: 0.8rem;
+        letter-spacing: 0.1rem;
+    }
+    
+    /* Grid layouts - mostly single column */
+    .trpg-board,
+    .pairs-board,
+    .gallery-folders {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .archive-board {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .stories-board {
+        gap: 2rem;
+    }
+    
+    /* Card adjustments */
+    .reel-card {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+    
+    .reel-title {
+        font-size: 1rem;
+    }
+    
+    .reel-date {
+        font-size: 0.85rem;
+    }
+    
+    .typewriter-card {
+        padding: 2rem 1.5rem;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+    
+    .typewriter-card::before {
+        height: 30px;
+    }
+    
+    .story-title {
+        font-size: 1.1rem;
+        letter-spacing: 0.1rem;
+    }
+    
+    .story-preview {
+        font-size: 0.9rem;
+    }
+    
+    .story-meta {
+        font-size: 0.85rem;
+    }
+    
+    .poster-card {
+        max-width: 280px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem;
+    }
+    
+    .poster-card::before {
+        font-size: 0.7rem;
+        letter-spacing: 0.3rem;
+    }
+    
+    .character-names h3 {
+        font-size: 1rem;
+    }
+    
+    .character-names span {
+        font-size: 1.5rem;
+    }
+    
+    .canister-card {
+        padding: 1.8rem 0.5rem;
+        min-height: 220px;
+    }
+    
+    .canister-label {
+        font-size: 0.9rem;
+    }
+    
+    .canister-icon {
+        font-size: 2rem;
+    }
+    
+    .folder-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .folder-title {
+        font-size: 1.2rem;
+    }
+    
+    .folder-preview {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        padding: 0.8rem;
+    }
+    
+    /* Action button */
+    .action-btn {
+        bottom: 20px;
+        right: 20px;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.8rem;
+        letter-spacing: 0.1rem;
+    }
+    
+    .action-btn::before {
+        margin-right: 0.3rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Modal adjustments */
+    .modal-content {
+        margin: 0.5rem;
+        border-radius: 10px;
+    }
+    
+    .modal-close {
+        top: 0.8rem;
+        right: 0.8rem;
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+    }
+    
+    .modal-body {
+        padding: 2rem 1rem;
+    }
+    
+    .modal-title {
+        font-size: 1.6rem;
+        letter-spacing: 0.1rem;
+    }
+    
+    .modal-title::after {
+        width: 100px;
+        bottom: -0.8rem;
+    }
+    
+    /* Form styles */
+    .cinema-form {
+        padding: 1.5rem;
+    }
+    
+    .form-group label {
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 0.8rem;
+        font-size: 0.95rem;
+    }
+    
+    .form-actions {
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+    }
+    
+    .modal-actions button,
+    .form-actions button {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.8rem;
+        letter-spacing: 0.1rem;
+    }
+    
+    /* Archive and gallery grids in modal */
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        padding: 1rem;
+    }
+    
+    /* Lightbox */
+    .lightbox-prev,
+    .lightbox-next {
+        width: 45px;
+        height: 45px;
+        font-size: 2rem;
+    }
+    
+    .lightbox-prev {
+        left: 0.5rem;
+    }
+    
+    .lightbox-next {
+        right: 0.5rem;
+    }
+    
+    .lightbox-info {
+        bottom: -50px;
+        padding: 0 1rem;
+    }
+    
+    .lightbox-info h3 {
+        font-size: 1rem;
+    }
+    
+    .lightbox-info p {
+        font-size: 0.85rem;
+    }
+    
+    /* Toast notifications */
+    #toast-container {
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+    }
+    
+    .toast-error,
+    .toast-success {
+        padding: 1rem 1.5rem 1rem 2.5rem;
+        font-size: 0.8rem;
+        letter-spacing: 0;
+    }
+    
+    /* Footer */
+    footer {
+        padding: 2rem 0 1.5rem;
+        margin-top: 3rem;
+    }
+    
+    .footer-quote {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+    
+    .footer-divider {
+        width: 60px;
+        margin: 1.5rem auto;
+    }
+    
+    .copyright {
+        font-size: 0.8rem;
+        letter-spacing: 0.05rem;
+    }
+}
+
+/* Very small devices (380px and below) */
+@media (max-width: 380px) {
+    .cinema-title {
+        font-size: 1.6rem;
+    }
+    
+    .nav-btn {
+        max-width: 55px;
+    }
+    
+    .nav-text {
+        font-size: 0.55rem;
+    }
+    
+    .ticket {
+        padding: 1.5rem 1rem;
+    }
+    
+    .ticket-header h2 {
+        font-size: 1.4rem;
+    }
+    
+    .board-title {
+        font-size: 1.4rem;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+    header {
+        padding: 1rem 0;
+    }
+    
+    .cinema-title {
+        font-size: 2rem;
+    }
+    
+    nav {
+        top: 80px;
+        padding: 0.8rem 0;
+    }
+    
+    .container {
+        padding-top: 150px;
+    }
+    
+    .nav-btn {
+        padding: 0.5rem 0.8rem;
+    }
+    
+    .nav-icon {
+        font-size: 1rem;
+    }
+    
+    .nav-text {
+        font-size: 0.7rem;
+    }
+}
+
+/* High resolution displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Enhance borders for retina displays */
+    .ticket,
+    .reel-card,
+    .typewriter-card,
+    .poster-card,
+    .canister-card,
+    .folder-card {
+        border-width: 2px;
+    }
+    
+    /* Sharper text rendering */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Print styles */
+@media print {
+    /* Hide interactive elements */
+    header,
+    nav,
+    footer,
+    .action-btn,
+    .modal-overlay,
+    #toast-container,
+    .loading-screen,
+    .curtain-container {
+        display: none !important;
+    }
+    
+    /* Reset colors for print */
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .container {
+        padding: 0;
+        max-width: 100%;
+    }
+    
+    .page {
+        display: block !important;
+        page-break-after: always;
+    }
+    
+    /* Adjust cards for print */
+    .ticket,
+    .typewriter-card {
+        background: white;
+        border: 1px solid #000;
+        box-shadow: none;
+        transform: none !important;
+    }
+    
+    .reel-card,
+    .poster-card,
+    .canister-card,
+    .folder-card {
+        background: white;
+        border: 1px solid #000;
+        box-shadow: none;
+    }
+    
+    /* Typography adjustments */
+    .cinema-title,
+    .board-title {
+        -webkit-text-stroke: none;
+        text-shadow: none;
+    }
+}

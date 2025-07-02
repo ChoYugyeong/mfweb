@@ -1,0 +1,626 @@
+/* Main Styles - Vintage Cinema Theme */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap');
+
+/* CSS Variables */
+:root {
+    --primary-black: #0a0a0a;
+    --secondary-black: #1a1a1a;
+    --gray-dark: #333;
+    --gray-medium: #666;
+    --gray-light: #999;
+    --white: #f5f5f5;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Libre Baskerville', serif;
+    background-color: var(--secondary-black);
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Selection Style */
+::selection {
+    background-color: var(--white);
+    color: var(--primary-black);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-black);
+    border: 1px solid var(--gray-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gray-dark);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-medium);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 2rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--white);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--gray-light);
+}
+
+/* Header Styles */
+header {
+    background-color: var(--primary-black);
+    padding: 2.5rem 0;
+    border-bottom: 3px solid var(--gray-dark);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    overflow: hidden;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    animation: spotlight 8s linear infinite;
+}
+
+.cinema-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: 0.5rem;
+    text-transform: uppercase;
+    text-shadow: 
+        3px 3px 0 #000,
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000,
+        4px 4px 8px rgba(0,0,0,0.8);
+    margin-bottom: 0.3rem;
+    -webkit-text-stroke: 0.5px rgba(255,255,255,0.3);
+}
+
+.subtitle {
+    text-align: center;
+    font-family: 'Special Elite', monospace;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--gray-light);
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+}
+
+/* Navigation */
+nav {
+    background-color: rgba(17, 17, 17, 0.95);
+    padding: 1.5rem 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    position: fixed;
+    top: 140px;
+    width: 100%;
+    z-index: 99;
+    backdrop-filter: blur(10px);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.nav-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.nav-btn {
+    background-color: var(--primary-black);
+    color: var(--gray-light);
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    border: 2px solid var(--gray-dark);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+    cursor: pointer;
+    min-width: 120px;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn:hover {
+    background-color: var(--gray-dark);
+    color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+    border-color: var(--gray-medium);
+}
+
+.nav-btn.active {
+    background-color: var(--white);
+    color: var(--primary-black);
+    border-color: var(--white);
+}
+
+.nav-icon {
+    font-size: 1.5rem;
+    filter: grayscale(100%);
+}
+
+.nav-text {
+    font-family: 'Special Elite', monospace;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    text-align: center;
+}
+
+/* Main Content Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 240px 2rem 4rem;
+    min-height: calc(100vh - 200px);
+}
+
+/* Page Styles */
+.page {
+    display: none;
+    min-height: 100vh;
+    position: relative;
+    z-index: 2;
+}
+
+.page.active {
+    display: block;
+}
+
+/* Hero Section - Ticket Style */
+.hero-section {
+    margin: 2rem auto 4rem;
+    max-width: 900px;
+    position: relative;
+}
+
+.ticket {
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    color: var(--primary-black);
+    padding: 4rem;
+    border-radius: 10px;
+    box-shadow: 
+        0 20px 40px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+    position: relative;
+    overflow: hidden;
+    border: 2px dashed var(--gray-dark);
+    transform: rotate(-1deg);
+    transition: var(--transition);
+}
+
+.ticket:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 
+        0 30px 60px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+.ticket::before, .ticket::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: var(--secondary-black);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ticket::before {
+    left: -25px;
+}
+
+.ticket::after {
+    right: -25px;
+}
+
+.ticket-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 3px dotted var(--gray-medium);
+}
+
+.ticket-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    -webkit-text-stroke: 0.5px rgba(0,0,0,0.3);
+}
+
+.ticket-number {
+    font-family: 'Special Elite', monospace;
+    font-size: 0.85rem;
+    color: var(--gray-medium);
+    letter-spacing: 0.4rem;
+}
+
+.ticket-content {
+    text-align: left;
+    font-size: 1.2rem;
+    line-height: 2;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.ticket-content p {
+    text-indent: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.admit-one {
+    display: block;
+    margin: 2rem auto 0;
+    padding: 0.7rem 3rem;
+    border: 3px solid var(--gray-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+    font-family: 'Special Elite', monospace;
+    font-size: 1.2rem;
+    text-align: center;
+    max-width: 200px;
+    background-color: var(--primary-black);
+    color: var(--white);
+    transition: var(--transition);
+}
+
+.admit-one:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* About Page Styles */
+.about-hero {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-black);
+    padding: 3rem 0 2rem;
+    text-align: center;
+    border-top: 3px solid var(--gray-dark);
+    margin-top: 6rem;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-quote {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-bottom: 2rem;
+    color: var(--gray-light);
+}
+
+.footer-divider {
+    width: 100px;
+    height: 2px;
+    background-color: var(--gray-medium);
+    margin: 2rem auto;
+}
+
+.copyright {
+    color: var(--gray-medium);
+    font-size: 0.9rem;
+    letter-spacing: 0.1rem;
+    font-family: 'Special Elite', monospace;
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mt-5 { margin-top: 3rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+.mb-5 { margin-bottom: 3rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+.p-5 { padding: 3rem; }
+
+/* Loading States */
+.loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '...';
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60% { content: '...'; }
+    80%, 100% { content: ''; }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 968px) {
+    .cinema-title {
+        font-size: 3rem;
+        letter-spacing: 0.3rem;
+    }
+    
+    nav {
+        top: 120px;
+    }
+    
+    .container {
+        padding-top: 220px;
+    }
+    
+    .nav-btn {
+        min-width: 100px;
+        padding: 0.8rem 1rem;
+    }
+    
+    .nav-icon {
+        font-size: 1.3rem;
+    }
+    
+    .nav-text {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .cinema-title {
+        font-size: 2.5rem;
+    }
+    
+    header {
+        padding: 2rem 0;
+    }
+    
+    nav {
+        top: 110px;
+        padding: 1rem 0;
+    }
+    
+    .container {
+        padding-top: 200px;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    
+    .nav-row {
+        gap: 0.5rem;
+    }
+    
+    .nav-btn {
+        min-width: 80px;
+        padding: 0.7rem 0.8rem;
+    }
+    
+    .ticket {
+        padding: 2.5rem 2rem;
+    }
+    
+    .ticket-header h2 {
+        font-size: 2rem;
+    }
+    
+    .ticket-content {
+        font-size: 1.1rem;
+    }
+    
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+}
+
+@media (max-width: 480px) {
+    .cinema-title {
+        font-size: 2rem;
+        letter-spacing: 0.1rem;
+    }
+    
+    .subtitle {
+        font-size: 0.7rem;
+        letter-spacing: 0.1rem;
+    }
+    
+    header {
+        padding: 1.5rem 0;
+    }
+    
+    nav {
+        top: 100px;
+        padding: 1rem 0;
+    }
+    
+    .container {
+        padding-top: 180px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .nav-container {
+        padding: 0 1rem;
+    }
+    
+    .nav-row {
+        gap: 0.3rem;
+    }
+    
+    .nav-btn {
+        min-width: 60px;
+        padding: 0.6rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .nav-icon {
+        font-size: 1.1rem;
+    }
+    
+    .nav-text {
+        font-size: 0.65rem;
+        letter-spacing: 0;
+    }
+    
+    .ticket {
+        padding: 2rem 1.5rem;
+        transform: rotate(0deg);
+    }
+    
+    .ticket::before,
+    .ticket::after {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .ticket::before {
+        left: -15px;
+    }
+    
+    .ticket::after {
+        right: -15px;
+    }
+    
+    .ticket-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .ticket-content {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+    
+    .ticket-content p {
+        text-indent: 1.5rem;
+    }
+    
+    .admit-one {
+        font-size: 1rem;
+        padding: 0.5rem 2rem;
+    }
+    
+    .footer-quote {
+        font-size: 1.2rem;
+    }
+    
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+    
+    header, nav, footer, .action-btn {
+        display: none;
+    }
+    
+    .container {
+        padding: 0;
+    }
+    
+    .page {
+        display: block !important;
+        page-break-after: always;
+    }
+}
