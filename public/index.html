@@ -219,14 +219,15 @@
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- App Scripts with version -->
+    <!-- App Scripts -->
     <script type="module">
-        import('./src/js/app.js').catch(err => {
-            console.error('Module loading error:', err);
-            // 폴백: 경로 문제시 다른 경로 시도
-            import('../src/js/app.js').catch(err2 => {
-                console.error('Failed to load app.js:', err2);
-            });
+        // Netlify 배포 환경에 맞게 경로 수정
+        import('./js/app.js').then(() => {
+            console.log('✅ App loaded successfully');
+        }).catch(err => {
+            console.error('❌ Failed to load app:', err);
+            // 앱 로드 실패시 기본 기능만 제공
+            document.getElementById('loading-screen').style.display = 'none';
         });
     </script>
 </body>
