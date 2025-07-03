@@ -1,8 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
+// public/js/config/supabase.js
+
+// Supabase는 이미 전역으로 로드되어 있음 (index.html의 CDN)
+const { createClient } = window.supabase;
 
 // Supabase configuration
-const supabaseUrl = process.env.VITE_SUPABASE_URL || window.SUPABASE_URL;
-const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY;
+const supabaseUrl = window.SUPABASE_URL;
+const supabaseAnonKey = window.SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
     console.error('Missing Supabase configuration. Please check your environment variables.');

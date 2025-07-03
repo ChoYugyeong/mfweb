@@ -219,9 +219,10 @@
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- Fallback Navigation (앱 로드 실패시 작동) -->
+    <!-- Basic Functionality (앱 로드 실패시에도 작동) -->
     <script>
         (function() {
+            // 기본 네비게이션 기능
             function initBasicNavigation() {
                 const navButtons = document.querySelectorAll('.nav-btn');
                 const pages = document.querySelectorAll('.page');
@@ -254,10 +255,63 @@
                 console.log('✅ Basic navigation ready');
             }
             
+            // 기본 모달 기능
+            function initBasicModals() {
+                // Action 버튼들에 이벤트 추가
+                document.querySelectorAll('.action-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showBasicModal();
+                    });
+                });
+            }
+            
+            // 간단한 모달 표시
+            function showBasicModal() {
+                const modalHtml = `
+                    <div class="modal-overlay active" id="basic-modal">
+                        <div class="modal-content">
+                            <button class="modal-close">&times;</button>
+                            <div class="modal-body">
+                                <h2 class="modal-title">Coming Soon</h2>
+                                <p style="text-align: center; color: var(--gray-light); margin: 2rem 0;">
+                                    Database connection is required for this feature.
+                                </p>
+                                <p style="text-align: center; color: var(--gray-light);">
+                                    Please configure Supabase to enable content creation.
+                                </p>
+                                <div class="modal-actions">
+                                    <button class="btn-primary" onclick="document.getElementById('basic-modal').remove()">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('modal-container').innerHTML = modalHtml;
+                
+                // Close button
+                document.querySelector('#basic-modal .modal-close').addEventListener('click', () => {
+                    document.getElementById('basic-modal').remove();
+                });
+                
+                // Click outside to close
+                document.getElementById('basic-modal').addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal-overlay')) {
+                        document.getElementById('basic-modal').remove();
+                    }
+                });
+            }
+            
+            // 초기화
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initBasicNavigation);
+                document.addEventListener('DOMContentLoaded', () => {
+                    initBasicNavigation();
+                    initBasicModals();
+                });
             } else {
                 initBasicNavigation();
+                initBasicModals();
             }
             
             // 로딩 화면 숨기기
@@ -267,16 +321,28 @@
                     loadingScreen.style.display = 'none';
                 }
             }, 500);
+            
+            // 전역 함수로 노출 (디버깅용)
+            window.showBasicModal = showBasicModal;
         })();
     </script>
     
     <!-- App Scripts -->
     <script type="module">
-        // 앱 로드 시도 (실패해도 기본 기능은 작동)
+        // 앱 로드 시도
         import('./js/app.js').then(() => {
-            console.log('✅ Full app loaded');
+            console.log('✅ Full app loaded successfully');
+            // 전체 앱이 로드되면 기본 이벤트 리스너 제거하고 앱 기능 사용
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+            });
         }).catch(err => {
             console.error('⚠️ App load failed, using basic mode:', err);
+            console.log('💡 You can still navigate between pages');
+            console.log('💡 For full functionality, please check:');
+            console.log('   1. All JS files are in public/js/');
+            console.log('   2. Supabase credentials are configured');
         });
     </script>
 </body>
