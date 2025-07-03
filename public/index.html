@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Yugyeong's Cinema - Welcome to the Silver Screen</title>
     <meta name="description" content="A vintage cinema-themed TRPG board and creative writing platform">
     
     <!-- Styles with version for cache busting -->
-    <link rel="stylesheet" href="styles/main.css?v=1.0.1">
-    <link rel="stylesheet" href="styles/animations.css?v=1.0.1">
-    <link rel="stylesheet" href="styles/boards.css?v=1.0.1">
-    <link rel="stylesheet" href="styles/modal.css?v=1.0.1">
-    <link rel="stylesheet" href="styles/responsive.css?v=1.0.1">
+    <link rel="stylesheet" href="styles/main.css?v=1.0.2">
+    <link rel="stylesheet" href="styles/animations.css?v=1.0.2">
+    <link rel="stylesheet" href="styles/boards.css?v=1.0.2">
+    <link rel="stylesheet" href="styles/modal.css?v=1.0.2">
+    <link rel="stylesheet" href="styles/responsive.css?v=1.0.2">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,6 +23,25 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <!-- index.html의 <head> 태그 안에 추가 -->
+    <script>
+        // 캐시 버스터 - 매번 새로운 타임스탬프 생성
+        (function() {
+            const timestamp = new Date().getTime();
+            const links = document.querySelectorAll('link[rel="stylesheet"]');
+            
+            links.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href.includes('?')) {
+                    link.setAttribute('href', href.split('?')[0] + '?t=' + timestamp);
+                } else {
+                    link.setAttribute('href', href + '?t=' + timestamp);
+                }
+            });
+            
+            console.log('Cache buster activated:', timestamp);
+        })();
+    </script>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -329,9 +351,12 @@
     
     <!-- App Scripts -->
     <script type="module">
+        // 버전 업데이트로 캐시 무효화
+        const version = '1.0.2';
+        
         // 앱 로드 시도
-        import('./js/app.js').then(() => {
-            console.log('✅ Full app loaded successfully');
+        import(`./js/app.js?v=${version}`).then(() => {
+            console.log('✅ Full app loaded successfully v' + version);
             // 전체 앱이 로드되면 기본 이벤트 리스너 제거하고 앱 기능 사용
             document.querySelectorAll('.action-btn').forEach(btn => {
                 const newBtn = btn.cloneNode(true);
