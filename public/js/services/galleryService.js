@@ -126,6 +126,12 @@ export class GalleryService {
         }
     }
 
+    static async addImageToFolder(imageData) {
+        try {
+            const { data, error } = await supabase
+                .from(TABLES.GALLERY_IMAGES)
+                .insert([imageData])
+                .select()
                 .single();
 
             if (error) throw error;
