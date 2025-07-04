@@ -1,9 +1,9 @@
-import { TRPGService } from '../services/trpgService.js';
-import { StoryService } from '../services/storyService.js';
-import { PairService } from '../services/pairService.js';
-import { ArchiveService } from '../services/archiveService.js';
-import { GalleryService } from '../services/galleryService.js';
-import { authService } from '../services/netlifyAuthService.js'; // Netlify Auth 사용
+
+
+
+
+
+
 
 export class ModalManager {
     constructor() {
@@ -78,7 +78,7 @@ export class ModalManager {
 
     // TRPG Detail Modal
     async showTRPGDetail(logId) {
-        const log = await TRPGService.getLogById(logId);
+        const log = await window.TRPGService.getLogById(logId);
         if (!log) {
             this.showError('Failed to load TRPG log');
             return;
@@ -891,12 +891,12 @@ export class ModalManager {
 
         try {
             // 인증 필요
-            await authService.requireAuth(async () => {
+            await window.authService.requireAuth(async () => {
                 let success = false;
                 
                 switch (type) {
                     case 'trpg':
-                        success = await TRPGService.deleteLog(id);
+                        success = await window.TRPGService.deleteLog(id);
                         break;
                     case 'story':
                         success = await StoryService.deleteStory(id);
@@ -939,12 +939,12 @@ export class ModalManager {
 
         try {
             // 인증 필요
-            await authService.requireAuth(async () => {
+            await window.authService.requireAuth(async () => {
                 let result;
                 if (logId) {
-                    result = await TRPGService.updateLog(logId, data);
+                    result = await window.TRPGService.updateLog(logId, data);
                 } else {
-                    result = await TRPGService.createLog(data);
+                    result = await window.TRPGService.createLog(data);
                 }
 
                 if (result) {

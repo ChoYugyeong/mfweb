@@ -1,5 +1,8 @@
-// src/js/services/archiveService.js
-import { supabase, TABLES, BUCKETS } from '../config/supabase.js';
+(function() {
+    'use strict';
+
+    // src/js/services/archiveService.js
+import { window.supabaseClient, window.TABLES, BUCKETS } from '../config/window.supabaseClient.js';
 
 export class ArchiveService {
     static async getArchiveStats() {
@@ -8,8 +11,8 @@ export class ArchiveService {
             const stats = {};
 
             for (const type of types) {
-                const { count, error } = await supabase
-                    .from(TABLES.ARCHIVE_ITEMS)
+                const { count, error } = await window.supabaseClient
+                    .from(window.TABLES.ARCHIVE_ITEMS)
                     .select('*', { count: 'exact', head: true })
                     .eq('type', type);
 
@@ -27,8 +30,8 @@ export class ArchiveService {
 
     static async getItemsByType(type, limit = 20) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.ARCHIVE_ITEMS)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.ARCHIVE_ITEMS)
                 .select('*')
                 .eq('type', type)
                 .order('created_at', { ascending: false })
@@ -44,8 +47,8 @@ export class ArchiveService {
 
     static async getItemById(id) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.ARCHIVE_ITEMS)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.ARCHIVE_ITEMS)
                 .select('*')
                 .eq('id', id)
                 .single();
@@ -60,8 +63,8 @@ export class ArchiveService {
 
     static async createItem(itemData) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.ARCHIVE_ITEMS)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.ARCHIVE_ITEMS)
                 .insert([itemData])
                 .select()
                 .single();
@@ -80,14 +83,14 @@ export class ArchiveService {
             const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
             const filePath = `${type}/${fileName}`;
 
-            const { data, error } = await supabase.storage
+            const { data, error } = await window.supabaseClient.storage
                 .from(BUCKETS.ARCHIVE)
                 .upload(filePath, file);
 
             if (error) throw error;
 
             // Get public URL
-            const { data: { publicUrl } } = supabase.storage
+            const { data: { publicUrl } } = window.supabaseClient.storage
                 .from(BUCKETS.ARCHIVE)
                 .getPublicUrl(filePath);
 
@@ -105,8 +108,8 @@ export class ArchiveService {
             if (!item) return false;
 
             // Delete from database
-            const { error } = await supabase
-                .from(TABLES.ARCHIVE_ITEMS)
+            const { error } = await window.supabaseClient
+                .from(window.TABLES.ARCHIVE_ITEMS)
                 .delete()
                 .eq('id', id);
 
@@ -121,3 +124,6 @@ export class ArchiveService {
         }
     }
 }
+
+    window.ArchiveService = ArchiveService;
+})();

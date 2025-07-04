@@ -1,6 +1,7 @@
-import { supabase, TABLES } from '../config/supabase.js';
+(function() {
+    'use strict';
 
-export class StoryService {
+    export class StoryService {
     /**
      * Get all stories
      * @param {number} limit - Number of stories to fetch
@@ -9,8 +10,8 @@ export class StoryService {
      */
     static async getStories(limit = 10, offset = 0) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.STORIES)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.STORIES)
                 .select('*')
                 .order('created_at', { ascending: false })
                 .range(offset, offset + limit - 1);
@@ -30,8 +31,8 @@ export class StoryService {
      */
     static async getStoryById(id) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.STORIES)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.STORIES)
                 .select('*')
                 .eq('id', id)
                 .single();
@@ -61,8 +62,8 @@ export class StoryService {
                 storyData.preview = storyData.content.substring(0, 150) + '...';
             }
 
-            const { data, error } = await supabase
-                .from(TABLES.STORIES)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.STORIES)
                 .insert([storyData])
                 .select()
                 .single();
@@ -89,8 +90,8 @@ export class StoryService {
                 updates.preview = updates.content.substring(0, 150) + '...';
             }
 
-            const { data, error } = await supabase
-                .from(TABLES.STORIES)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.STORIES)
                 .update({
                     ...updates,
                     updated_at: new Date().toISOString()
@@ -114,8 +115,8 @@ export class StoryService {
      */
     static async deleteStory(id) {
         try {
-            const { error } = await supabase
-                .from(TABLES.STORIES)
+            const { error } = await window.supabaseClient
+                .from(window.TABLES.STORIES)
                 .delete()
                 .eq('id', id);
 
@@ -134,8 +135,8 @@ export class StoryService {
      */
     static async searchStories(query) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.STORIES)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.STORIES)
                 .select('*')
                 .or(`title.ilike.%${query}%, content.ilike.%${query}%, author.ilike.%${query}%`)
                 .order('created_at', { ascending: false });
@@ -155,8 +156,8 @@ export class StoryService {
      */
     static async getStoriesByAuthor(author) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.STORIES)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.STORIES)
                 .select('*')
                 .eq('author', author)
                 .order('created_at', { ascending: false });
@@ -176,8 +177,8 @@ export class StoryService {
      */
     static async getStoriesByTag(tag) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.STORIES)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.STORIES)
                 .select('*')
                 .contains('tags', [tag])
                 .order('created_at', { ascending: false });
@@ -190,3 +191,6 @@ export class StoryService {
         }
     }
 }
+
+    window.StoryService = StoryService;
+})();

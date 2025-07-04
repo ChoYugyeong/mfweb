@@ -10,11 +10,11 @@
     <meta name="description" content="A vintage cinema-themed TRPG board and creative writing platform">
     
     <!-- Styles with version for cache busting -->
-    <link rel="stylesheet" href="styles/main.css?v=1.0.2">
-    <link rel="stylesheet" href="styles/animations.css?v=1.0.2">
-    <link rel="stylesheet" href="styles/boards.css?v=1.0.2">
-    <link rel="stylesheet" href="styles/modal.css?v=1.0.2">
-    <link rel="stylesheet" href="styles/responsive.css?v=1.0.2">
+    <link rel="stylesheet" href="styles/main.css?v=1.0.3">
+    <link rel="stylesheet" href="styles/animations.css?v=1.0.3">
+    <link rel="stylesheet" href="styles/boards.css?v=1.0.3">
+    <link rel="stylesheet" href="styles/modal.css?v=1.0.3">
+    <link rel="stylesheet" href="styles/responsive.css?v=1.0.3">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,9 +23,9 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <!-- index.html의 <head> 태그 안에 추가 -->
+    
+    <!-- 캐시 버스터 -->
     <script>
-        // 캐시 버스터 - 매번 새로운 타임스탬프 생성
         (function() {
             const timestamp = new Date().getTime();
             const links = document.querySelectorAll('link[rel="stylesheet"]');
@@ -231,17 +231,29 @@
         </div>
     </footer>
     
-    <!-- Supabase Configuration (for Netlify environment variables) -->
-    <script>
-        // These will be replaced by Netlify during build
-        window.SUPABASE_URL = '%VITE_SUPABASE_URL%';
-        window.SUPABASE_ANON_KEY = '%VITE_SUPABASE_ANON_KEY%';
-    </script>
-    
-    <!-- Supabase SDK -->
+    <!-- Supabase SDK (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- Basic Functionality (앱 로드 실패시에도 작동) -->
+    <!-- Supabase Configuration -->
+    <script>
+        // Netlify 환경 변수 설정
+        // 개발 환경에서는 직접 값을 넣어주세요
+        window.SUPABASE_URL = '%VITE_SUPABASE_URL%';
+        window.SUPABASE_ANON_KEY = '%VITE_SUPABASE_ANON_KEY%';
+        
+        // Netlify에서 치환되지 않은 경우를 위한 폴백
+        if (window.SUPABASE_URL.includes('%VITE_')) {
+            console.warn('Supabase environment variables not set. Using fallback values.');
+            // 개발용 기본값 (실제 값으로 교체 필요)
+            window.SUPABASE_URL = '';
+            window.SUPABASE_ANON_KEY = '';
+        }
+    </script>
+    
+    <!-- Supabase 설정 파일 로드 -->
+    <script src="js/config/supabase.js?v=1.0.3"></script>
+    
+    <!-- Basic Functionality -->
     <script>
         (function() {
             // 기본 네비게이션 기능
@@ -279,7 +291,6 @@
             
             // 기본 모달 기능
             function initBasicModals() {
-                // Action 버튼들에 이벤트 추가
                 document.querySelectorAll('.action-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -312,12 +323,10 @@
                 
                 document.getElementById('modal-container').innerHTML = modalHtml;
                 
-                // Close button
                 document.querySelector('#basic-modal .modal-close').addEventListener('click', () => {
                     document.getElementById('basic-modal').remove();
                 });
                 
-                // Click outside to close
                 document.getElementById('basic-modal').addEventListener('click', (e) => {
                     if (e.target.classList.contains('modal-overlay')) {
                         document.getElementById('basic-modal').remove();
@@ -344,31 +353,28 @@
                 }
             }, 500);
             
-            // 전역 함수로 노출 (디버깅용)
             window.showBasicModal = showBasicModal;
         })();
     </script>
     
-    <!-- App Scripts -->
-    <script type="module">
-        // 버전 업데이트로 캐시 무효화
-        const version = '1.0.2';
-        
-        // 앱 로드 시도
-        import(`./js/app.js?v=${version}`).then(() => {
-            console.log('✅ Full app loaded successfully v' + version);
-            // 전체 앱이 로드되면 기본 이벤트 리스너 제거하고 앱 기능 사용
-            document.querySelectorAll('.action-btn').forEach(btn => {
-                const newBtn = btn.cloneNode(true);
-                btn.parentNode.replaceChild(newBtn, btn);
-            });
-        }).catch(err => {
-            console.error('⚠️ App load failed, using basic mode:', err);
-            console.log('💡 You can still navigate between pages');
-            console.log('💡 For full functionality, please check:');
-            console.log('   1. All JS files are in public/js/');
-            console.log('   2. Supabase credentials are configured');
-        });
+    <!-- App Scripts (일반 스크립트로 변경) -->
+    <script src="js/app.js?v=1.0.3"></script>
+    
+    <!-- 앱 로드 확인 -->
+    <script>
+        // 앱이 로드되었는지 확인
+        setTimeout(() => {
+            if (window.APP_LOADED) {
+                console.log('✅ Full app loaded successfully');
+                // 전체 앱이 로드되면 기본 이벤트 리스너 제거
+                document.querySelectorAll('.action-btn').forEach(btn => {
+                    const newBtn = btn.cloneNode(true);
+                    btn.parentNode.replaceChild(newBtn, btn);
+                });
+            } else {
+                console.warn('⚠️ App partially loaded, some features may be limited');
+            }
+        }, 1000);
     </script>
 </body>
 </html>

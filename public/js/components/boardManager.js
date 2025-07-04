@@ -1,10 +1,10 @@
-import { TRPGService } from '../services/trpgService.js';
-import { StoryService } from '../services/storyService.js';
-import { PairService } from '../services/pairService.js';
-import { ArchiveService } from '../services/archiveService.js';
-import { GalleryService } from '../services/galleryService.js';
-import { ModalManager } from './modalManager.js';
-import { authService } from '../services/netlifyAuthService.js'; // Netlify Auth 사용
+
+
+
+
+
+
+
 
 export class BoardManager {
     constructor() {
@@ -73,7 +73,7 @@ export class BoardManager {
     }
 
     async loadTRPGLogs() {
-        const logs = await TRPGService.getLogs(12); // Get 12 latest logs
+        const logs = await window.TRPGService.getLogs(12); // Get 12 latest logs
         const container = document.querySelector('.trpg-board');
         
         if (!container) return;
@@ -298,7 +298,7 @@ export class BoardManager {
         const pageId = activePage.id;
         
         // 인증 필요한 액션들
-        authService.requireAuth(() => {
+        window.authService.requireAuth(() => {
             switch (pageId) {
                 case 'trpg':
                     this.modalManager.showTRPGForm();

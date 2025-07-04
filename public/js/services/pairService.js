@@ -1,11 +1,12 @@
-// src/js/services/pairService.js
-import { supabase, TABLES } from '../config/supabase.js';
+(function() {
+    'use strict';
 
+    // src/js/services/pairService.js
 export class PairService {
     static async getPairs(limit = 10, offset = 0) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.CHARACTER_PAIRS)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.CHARACTER_PAIRS)
                 .select('*')
                 .order('created_at', { ascending: false })
                 .range(offset, offset + limit - 1);
@@ -20,8 +21,8 @@ export class PairService {
 
     static async getPairById(id) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.CHARACTER_PAIRS)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.CHARACTER_PAIRS)
                 .select('*')
                 .eq('id', id)
                 .single();
@@ -36,8 +37,8 @@ export class PairService {
 
     static async createPair(pairData) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.CHARACTER_PAIRS)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.CHARACTER_PAIRS)
                 .insert([pairData])
                 .select()
                 .single();
@@ -52,8 +53,8 @@ export class PairService {
 
     static async updatePair(id, updates) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.CHARACTER_PAIRS)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.CHARACTER_PAIRS)
                 .update({
                     ...updates,
                     updated_at: new Date().toISOString()
@@ -72,8 +73,8 @@ export class PairService {
 
     static async deletePair(id) {
         try {
-            const { error } = await supabase
-                .from(TABLES.CHARACTER_PAIRS)
+            const { error } = await window.supabaseClient
+                .from(window.TABLES.CHARACTER_PAIRS)
                 .delete()
                 .eq('id', id);
 
@@ -85,3 +86,6 @@ export class PairService {
         }
     }
 }
+
+    window.PairService = PairService;
+})();

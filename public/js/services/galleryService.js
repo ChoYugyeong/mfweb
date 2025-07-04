@@ -1,11 +1,14 @@
-// src/js/services/galleryService.js
-import { supabase, TABLES, BUCKETS } from '../config/supabase.js';
+(function() {
+    'use strict';
+
+    // src/js/services/galleryService.js
+import { window.supabaseClient, window.TABLES, BUCKETS } from '../config/window.supabaseClient.js';
 
 export class GalleryService {
     static async getFolders(limit = 10, offset = 0) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.GALLERY_FOLDERS)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.GALLERY_FOLDERS)
                 .select('*')
                 .order('created_at', { ascending: false })
                 .range(offset, offset + limit - 1);
@@ -20,8 +23,8 @@ export class GalleryService {
 
     static async getFolderById(id) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.GALLERY_FOLDERS)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.GALLERY_FOLDERS)
                 .select('*')
                 .eq('id', id)
                 .single();
@@ -36,8 +39,8 @@ export class GalleryService {
 
     static async getImagesInFolder(folderId) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.GALLERY_IMAGES)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.GALLERY_IMAGES)
                 .select('*')
                 .eq('folder_id', folderId)
                 .order('order_index', { ascending: true });
@@ -52,8 +55,8 @@ export class GalleryService {
 
     static async createFolder(folderData) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.GALLERY_FOLDERS)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.GALLERY_FOLDERS)
                 .insert([folderData])
                 .select()
                 .single();
@@ -68,8 +71,8 @@ export class GalleryService {
 
     static async updateFolder(id, updates) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.GALLERY_FOLDERS)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.GALLERY_FOLDERS)
                 .update({
                     ...updates,
                     updated_at: new Date().toISOString()
@@ -89,8 +92,8 @@ export class GalleryService {
     static async deleteFolder(id) {
         try {
             // Images will be cascade deleted due to foreign key constraint
-            const { error } = await supabase
-                .from(TABLES.GALLERY_FOLDERS)
+            const { error } = await window.supabaseClient
+                .from(window.TABLES.GALLERY_FOLDERS)
                 .delete()
                 .eq('id', id);
 
@@ -108,14 +111,14 @@ export class GalleryService {
             const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
             const filePath = `gallery/${folderId}/${fileName}`;
 
-            const { data, error } = await supabase.storage
+            const { data, error } = await window.supabaseClient.storage
                 .from(BUCKETS.IMAGES)
                 .upload(filePath, file);
 
             if (error) throw error;
 
             // Get public URL
-            const { data: { publicUrl } } = supabase.storage
+            const { data: { publicUrl } } = window.supabaseClient.storage
                 .from(BUCKETS.IMAGES)
                 .getPublicUrl(filePath);
 
@@ -128,8 +131,8 @@ export class GalleryService {
 
     static async addImageToFolder(imageData) {
         try {
-            const { data, error } = await supabase
-                .from(TABLES.GALLERY_IMAGES)
+            const { data, error } = await window.supabaseClient
+                .from(window.TABLES.GALLERY_IMAGES)
                 .insert([imageData])
                 .select()
                 .single();
@@ -149,8 +152,8 @@ export class GalleryService {
     static async deleteImage(id) {
         try {
             // Get image info first
-            const { data: image } = await supabase
-                .from(TABLES.GALLERY_IMAGES)
+            const { data: image } = await window.supabaseClient
+                .from(window.TABLES.GALLERY_IMAGES)
                 .select('folder_id, image_url')
                 .eq('id', id)
                 .single();
@@ -158,8 +161,8 @@ export class GalleryService {
             if (!image) return false;
 
             // Delete from database
-            const { error } = await supabase
-                .from(TABLES.GALLERY_IMAGES)
+            const { error } = await window.supabaseClient
+                .from(window.TABLES.GALLERY_IMAGES)
                 .delete()
                 .eq('id', id);
 
@@ -177,13 +180,13 @@ export class GalleryService {
 
     static async updateFolderImageCount(folderId) {
         try {
-            const { count } = await supabase
-                .from(TABLES.GALLERY_IMAGES)
+            const { count } = await window.supabaseClient
+                .from(window.TABLES.GALLERY_IMAGES)
                 .select('*', { count: 'exact', head: true })
                 .eq('folder_id', folderId);
 
-            await supabase
-                .from(TABLES.GALLERY_FOLDERS)
+            await window.supabaseClient
+                .from(window.TABLES.GALLERY_FOLDERS)
                 .update({ image_count: count || 0 })
                 .eq('id', folderId);
         } catch (error) {
@@ -191,3 +194,6 @@ export class GalleryService {
         }
     }
 }
+
+    window.GalleryService = GalleryService;
+})();
