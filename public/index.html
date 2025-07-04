@@ -23,25 +23,6 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    
-    <!-- 캐시 버스터 -->
-    <script>
-        (function() {
-            const timestamp = new Date().getTime();
-            const links = document.querySelectorAll('link[rel="stylesheet"]');
-            
-            links.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href.includes('?')) {
-                    link.setAttribute('href', href.split('?')[0] + '?t=' + timestamp);
-                } else {
-                    link.setAttribute('href', href + '?t=' + timestamp);
-                }
-            });
-            
-            console.log('Cache buster activated:', timestamp);
-        })();
-    </script>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -237,23 +218,22 @@
     <!-- Supabase Configuration -->
     <script>
         // Netlify 환경 변수 설정
-        // 개발 환경에서는 직접 값을 넣어주세요
         window.SUPABASE_URL = '%VITE_SUPABASE_URL%';
         window.SUPABASE_ANON_KEY = '%VITE_SUPABASE_ANON_KEY%';
         
         // Netlify에서 치환되지 않은 경우를 위한 폴백
         if (window.SUPABASE_URL.includes('%VITE_')) {
-            console.warn('Supabase environment variables not set. Using fallback values.');
-            // 개발용 기본값 (실제 값으로 교체 필요)
+            console.warn('Supabase environment variables not set. Running in demo mode.');
+            // 데모 모드 설정
             window.SUPABASE_URL = '';
             window.SUPABASE_ANON_KEY = '';
         }
     </script>
     
-    <!-- Supabase 설정 파일 로드 -->
-    <script src="js/config/supabase.js?v=1.0.3"></script>
+    <!-- Core Scripts - Load in order -->
+    <script src="js/config/supabase.js?v=1.0.4"></script>
     
-    <!-- Basic Functionality -->
+    <!-- Basic Functionality (for immediate response) -->
     <script>
         (function() {
             // 기본 네비게이션 기능
@@ -308,10 +288,10 @@
                             <div class="modal-body">
                                 <h2 class="modal-title">Coming Soon</h2>
                                 <p style="text-align: center; color: var(--gray-light); margin: 2rem 0;">
-                                    Database connection is required for this feature.
+                                    This feature is loading...
                                 </p>
                                 <p style="text-align: center; color: var(--gray-light);">
-                                    Please configure Supabase to enable content creation.
+                                    Please wait a moment or check your connection.
                                 </p>
                                 <div class="modal-actions">
                                     <button class="btn-primary" onclick="document.getElementById('basic-modal').remove()">OK</button>
@@ -357,24 +337,19 @@
         })();
     </script>
     
-    <!-- App Scripts (일반 스크립트로 변경) -->
-    <script src="js/app.js?v=1.0.3"></script>
+    <!-- Main App Script -->
+    <script src="js/app.js?v=1.0.4"></script>
     
-    <!-- 앱 로드 확인 -->
+    <!-- App Load Status Check -->
     <script>
         // 앱이 로드되었는지 확인
         setTimeout(() => {
             if (window.APP_LOADED) {
                 console.log('✅ Full app loaded successfully');
-                // 전체 앱이 로드되면 기본 이벤트 리스너 제거
-                document.querySelectorAll('.action-btn').forEach(btn => {
-                    const newBtn = btn.cloneNode(true);
-                    btn.parentNode.replaceChild(newBtn, btn);
-                });
             } else {
                 console.warn('⚠️ App partially loaded, some features may be limited');
             }
-        }, 1000);
+        }, 2000);
     </script>
 </body>
 </html>

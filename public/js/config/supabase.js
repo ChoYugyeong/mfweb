@@ -1,41 +1,63 @@
 // public/js/config/supabase.js
-
-// Supabase는 이미 전역으로 로드되어 있음 (index.html의 CDN)
-// 전역 객체로 직접 접근
 (function() {
-    // window 객체에 직접 할당하여 다른 스크립트에서 사용 가능하게 함
-    window.SUPABASE_CONFIG = window.SUPABASE_CONFIG || {};
+    'use strict';
+    
+    // Check if Supabase is loaded
+    if (!window.supabase) {
+        console.error('Supabase SDK not loaded. Please check the CDN link.');
+        return;
+    }
     
     // Supabase configuration
     const supabaseUrl = window.SUPABASE_URL;
     const supabaseAnonKey = window.SUPABASE_ANON_KEY;
 
-    if (!supabaseUrl || !supabaseAnonKey) {
+    if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes('%VITE_')) {
         console.error('Missing Supabase configuration. Please check your environment variables.');
         console.log('Current URL:', supabaseUrl);
         console.log('Current Key:', supabaseAnonKey ? 'Present' : 'Missing');
-        return;
+        
+        // Create dummy client to prevent errors
+        window.supabaseClient = {
+            from: () => ({
+                select: () => Promise.resolve({ data: [], error: null }),
+                insert: () => Promise.resolve({ data: null, error: null }),
+                update: () => Promise.resolve({ data: null, error: null }),
+                delete: () => Promise.resolve({ error: null })
+            }),
+            storage: {
+                from: () => ({
+                    upload: () => Promise.resolve({ data: null, error: null }),
+                    getPublicUrl: () => ({ data: { publicUrl: '' } })
+                })
+            }
+        };
+        
+        console.warn('Using dummy Supabase client due to missing configuration');
+    } else {
+        // Create Supabase client
+        try {
+            window.supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey, {
+                auth: {
+                    persistSession: true,
+                    autoRefreshToken: true,
+                }
+            });
+            
+            // Connection test
+            window.supabaseClient.from('trpg_logs').select('count', { count: 'exact' }).then(({ data, error }) => {
+                if (error) {
+                    console.error('Supabase connection test failed:', error);
+                } else {
+                    console.log('✅ Supabase connected successfully');
+                }
+            });
+        } catch (error) {
+            console.error('Failed to create Supabase client:', error);
+        }
     }
 
-    // Create Supabase client - window 객체에 할당
-    window.supabase = window.supabase || {};
-    window.supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey, {
-        auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-        }
-    });
-
-    // 연결 테스트
-    window.supabaseClient.from('trpg_logs').select('count', { count: 'exact' }).then(({ data, error }) => {
-        if (error) {
-            console.error('Supabase connection test failed:', error);
-        } else {
-            console.log('✅ Supabase connected successfully');
-        }
-    });
-
-    // Database table names - window 객체에 할당
+    // Database table names
     window.TABLES = {
         TRPG_LOGS: 'trpg_logs',
         STORIES: 'stories',
@@ -45,20 +67,12 @@
         GALLERY_IMAGES: 'gallery_images'
     };
 
-    // Storage bucket names - window 객체에 할당
+    // Storage bucket names
     window.BUCKETS = {
         IMAGES: 'images',
         DOCUMENTS: 'documents',
         ARCHIVE: 'archive'
     };
 
-    // 다른 스크립트에서 쉽게 접근할 수 있도록 설정
-    window.SUPABASE_CONFIG = {
-        client: window.supabaseClient,
-        tables: window.TABLES,
-        buckets: window.BUCKETS
-    };
-
     console.log('✅ Supabase configuration loaded');
-})();</document_content>
-</invoke>
+})();
